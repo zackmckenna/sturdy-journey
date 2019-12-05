@@ -10,6 +10,11 @@ const isGood = string => string === 'good';
 
 const isEvil = string => string === 'evil';
 
+const setPlayerCountLogic = (players, gameLogic) => {
+  return gameLogic.filter(game => game.players === players)[0];
+};
+
+
 
 module.exports = {
   isNeutralWizard,
@@ -17,5 +22,6 @@ module.exports = {
   isKeyholder,
   isGuard,
   isGood,
-  isEvil
+  isEvil,
+  setPlayerCountLogic
 };
