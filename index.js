@@ -1,9 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const mongoose = require('mongoose')
 
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
