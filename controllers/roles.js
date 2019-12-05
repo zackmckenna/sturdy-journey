@@ -11,25 +11,30 @@ rolesRouter.get('/', async (request, response) => {
   response.json(roles.map(role => role.toJSON()));
 });
 
-rolesRouter.delete('/:id', (request, response) => {
-  const id = +request.params.id;
-  roles = roles.filter(role => role.id !== id);
-
-  response.status(204).end();
-});
-
-rolesRouter.get('/:id', (request, response) => {
-  Role.findById(request.params.id).then(role => {
-    response.json(role.toJSON());
-  });
-});
-
-rolesRouter.post('/', (request, response) => {
-  const body = request.body;
-
-  if (body.name === undefined) {
-    return response.status(400).json({ error: 'name missing' });
+rolesRouter.delete('/:id', async (request, response, next) => {
+  try{
+    await Role.findByIdAndRemove(request.params.id);
+    response.status(204).end();
+  } catch(exception){
+    next(exception);
   }
+});
+
+rolesRouter.get('/:id', async (request, response, next) => {
+  try{
+    const role = await Role.findById(request.params.id);
+    if (role) {
+      response.json(role.toJSON());
+    } else {
+      response.status(404).end();
+    }
+  } catch(exception) {
+    next(exception);
+  }
+});
+
+rolesRouter.post('/', async (request, response, next) => {
+  const body = request.body;
 
   const role = new Role({
     name: body.name,
@@ -39,9 +44,14 @@ rolesRouter.post('/', (request, response) => {
     booleanAlign: body.booleanAlign
   });
 
-  role.save().then(savedRole => {
+  try {
+    const savedRole = await role.save();
     response.json(savedRole.toJSON());
-  });
+  } catch (exception){
+    next(exception);
+  }
+
 });
+
 
 module.exports = rolesRouter;

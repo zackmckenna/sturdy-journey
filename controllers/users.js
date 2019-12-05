@@ -6,22 +6,25 @@ usersRouter.get('/', async (request, response) => {
   response.json(users.map(user => user.toJSON()));
 });
 
-usersRouter.delete('/:id', async (request, response) => {
-  const users = await User.find({});
-  
-  response.status(204).end();
+usersRouter.delete('/:id', async (request, response, next) => {
+  try {
+    await User.findByIdAndRemove(request.params.id);
+    response.status(204).end();
+  } catch (exception) {
+    next(exception);
+  }
 });
 
-usersRouter.get('/:id', (request, response) => {
-  const id = +request.params.id;
-  const user = User.findById(id).then(user => {
-    response.json(user.toJSON());
-  });
-
-  if (user) {
-    response.send(`User Id: ${user.id} username: ${user.name} is name: ${user.username}.`);
-  } else {
-    response.status(404).end();
+usersRouter.get('/:id', async (request, response, next) => {
+  try{
+    const user = await User.findById(request.params.id);
+    if (user) {
+      response.json(user.toJSON());
+    } else {
+      response.status(404).end();
+    }
+  } catch(exception) {
+    next(exception);
   }
 });
 
