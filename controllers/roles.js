@@ -15,7 +15,9 @@ rolesRouter.get('/api/gameLogic', (request, response) => {
 });
 
 rolesRouter.get('/', (request, response) => {
-  response.json(roles);
+  Role.find({}).then(roles => {
+    response.json(roles);
+  });
 });
 
 rolesRouter.delete('/:id', (request, response) => {
