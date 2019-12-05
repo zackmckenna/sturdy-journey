@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const Role = require('./models/role')
 
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
@@ -118,26 +119,26 @@ app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>')
 })
 
-app.get('/roleCount', (request, response) => {
+app.get('/api/roleCount', (request, response) => {
   response.send(`<h1>There are ${roles.length} roles.</h1>`)
 })
 
-app.get('/gameLogic', (request, response) => {
+app.get('/api/gameLogic', (request, response) => {
   response.send(`<h3>${gameLogic.map(game => `If there are ${game.players} players, there is ${game.wizards} wizards`)} </h3>`)
 })
 
-app.get('/roles', (request, response) => {
+app.get('/api/roles', (request, response) => {
   response.json(roles)
 })
 
-app.delete('/roles/:id', (request, response) => {
+app.delete('/api/roles/:id', (request, response) => {
   const id = +request.params.id
   roles = roles.filter(role => role.id !== id)
 
   response.status(204).end()
 })
 
-app.get('/roles/:id', (request, response) => {
+app.get('/api/roles/:id', (request, response) => {
   const id = +request.params.id
   const role = roles.find(role => role.id === id)
 
@@ -148,19 +149,27 @@ app.get('/roles/:id', (request, response) => {
   }
 })
 
-app.post('/roles', (request, response) => {
-  const maxId = roles.length > 0
-  ? Math.max(...roles.map(role => role.id))
-  : 0
+app.post('/api/roles', (request, response) => {
+  const body = request.body
 
-  const role = request.body
-  role.id = maxId + 1
-  console.log(role)
+  if (body.name === undefined) {
+    return response.status(400).json({ error: 'name missing' })
+  }
 
-  response.json(role)
+  const role = new Role({
+    name: body.name,
+    alignment: body.alignment,
+    description: body.description,
+    actions: body.actions,
+    booleanAlign: body.booleanAlign
+  })
+
+  role.save().then(savedRole => {
+    response.json(savedRole.toJSON())
+  })
 })
 
-const PORT = 3001
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })

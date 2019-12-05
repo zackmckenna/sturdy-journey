@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "watch": "nodemon index.js"
+    "watch": "nodemon index.js",
+    "lint": "eslint ."
   },
   "author": "Zack McKenna <zackmckenna@gmail.com>",
   "license": "MIT",
@@ -12,8 +13,10 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "eslint": "^6.7.2",
     "express": "^4.17.1",
     "mongoose": "^5.7.13",
+    "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.9.1",
     "nodemon": "^2.0.1"
   }
