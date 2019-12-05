@@ -1,51 +1,36 @@
 const mongoose = require('mongoose');
 const supertest = require('supertest');
+const helper = require('./tst_helper');
 const app = require('../app');
 const api = supertest(app);
 const User = require('../models/user');
 
-const initialUsers = [
-  {
-    name: 'Zack',
-    username: 'zacksparrow',
-    password: 'password',
-  },
-  {
-    name: 'suzye',
-    username: 'snooz',
-    password: 'snooz',
-  },
-];
+describe('when there is initially one user at db', () => {
+  beforeEach(async () => {
+    await User.deleteMany({});
+    const user = new User({ username: 'root', password: 'sekret' });
+    await user.save();
+  });
 
-beforeEach(async () => {
-  await User.deleteMany({});
+  test('creation succeeds with a fresh username', async () => {
+    const usersAtStart = await helper.usersInDb();
 
-  let userObject = new User(initialUsers[0]);
-  await userObject.save();
+    const newUser = {
+      username: 'mluukkai',
+      name: 'Matti Luukkainen',
+      password: 'salainen',
+    };
 
-  userObject = new User(initialUsers[1]);
-  await userObject.save();
-});
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(200)
+      .expect('Content-Type', /application\/json/);
 
-test('a valid user can be added ', async () => {
-  const newUser = {
-    name: 'test1',
-    username: 'test1',
-    password: 'test1'
-  };
+    const usersAtEnd = await helper.usersInDb();
+    expect(usersAtEnd.length).toBe(usersAtStart.length + 1);
 
-  await api
-    .post('/api/users')
-    .send(newUser)
-    .expect(200)
-    .expect('Content-Type', /application\/json/);
-
-  const response = await api.get('/api/users');
-
-  const contents = response.body.map(r => r.content);
-
-  expect(response.body.length).toBe(initialUsers.length + 1);
-  expect(response.body[2].name).toContain(
-    'test1'
-  );
+    const usernames = usersAtEnd.map(u => u.username);
+    expect(usernames).toContain(newUser.username);
+  });
 });
