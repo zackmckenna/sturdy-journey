@@ -7,6 +7,8 @@ let users = usersRouter.get('/', (request, response) => {
   });
 });
 
+console.log(users);
+
 usersRouter.get('/api/userCount', (request, response) => {
   response.send(`<h1>There are ${users.length} roles.</h1>`);
 });
@@ -20,7 +22,7 @@ usersRouter.get('/', (request, response) => {
 
 usersRouter.delete('/:id', (request, response) => {
   const id = +request.params.id;
-  users = roles.filter(role => role.id !== id);
+  users = users.filter(user => user.id !== id);
 
   response.status(204).end();
 });
@@ -30,7 +32,7 @@ usersRouter.get('/:id', (request, response) => {
   const user = users.find(user => user.id === id);
 
   if (user) {
-    response.send(`User Id: ${user.id} The ${user.name} is a ${role.alignment} character. They can ${role.actions}.`);
+    response.send(`User Id: ${user.id} username: ${user.name} is name: ${user.username}.`);
   } else {
     response.status(404).end();
   }
@@ -38,6 +40,7 @@ usersRouter.get('/:id', (request, response) => {
 
 usersRouter.post('/', (request, response) => {
   const body = request.body;
+  console.log(body);
 
   if (body.name === undefined) {
     return response.status(400).json({ error: 'name missing' });
@@ -49,8 +52,8 @@ usersRouter.post('/', (request, response) => {
     password: body.password,
   });
 
-  user.save().then(savedRole => {
-    response.json(savedRole.toJSON());
+  user.save().then(savedUser => {
+    response.json(savedUser.toJSON());
   });
 });
 
