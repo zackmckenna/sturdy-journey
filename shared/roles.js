@@ -1,4 +1,6 @@
-export const ROLES = [
+import { builtinModules } from "module";
+
+const ROLES = [
   {
     name: 'Keyholder',
     alignment: 'Good',
@@ -30,4 +32,6 @@ export const ROLES = [
     description: 'You must find the keyholder',
     actions: 'identify the keyholder',
   }
-]
+];
+
+module.exports = ROLES;

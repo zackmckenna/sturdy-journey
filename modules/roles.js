@@ -106,11 +106,11 @@ let gameLogic = [
 ];
 
 rolesRouter.get('/api/roleCount', (request, response) => {
-  response.send(`<h1>There are ${roles.length} roles.</h1>`)
+  response.send(`<h1>There are ${roles.length} roles.</h1>`);
 });
 
 rolesRouter.get('/api/gameLogic', (request, response) => {
-  response.send(`<h3>${gameLogic.map(game => `If there are ${game.players} players, there is ${game.wizards} wizards`)} </h3>`)
+  response.send(`<h3>${gameLogic.map(game => `If there are ${game.players} players, there is ${game.wizards} wizards`)} </h3>`);
 });
 
 rolesRouter.get('/', (request, response) => {
@@ -129,7 +129,7 @@ rolesRouter.get('/:id', (request, response) => {
   const role = roles.find(role => role.id === id);
 
   if (role) {
-    response.send(`Role Id: ${role.id} The ${role.name} is a ${role.alignment} character. They can ${role.actions}.`)
+    response.send(`Role Id: ${role.id} The ${role.name} is a ${role.alignment} character. They can ${role.actions}.`);
   } else {
     response.status(404).end();
   }
@@ -139,7 +139,7 @@ rolesRouter.post('/', (request, response) => {
   const body = request.body;
 
   if (body.name === undefined) {
-    return response.status(400).json({ error: 'name missing' })
+    return response.status(400).json({ error: 'name missing' });
   }
 
   const role = new Role({
