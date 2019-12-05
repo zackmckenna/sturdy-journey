@@ -3,5 +3,8 @@
     "gamelogic",
     "keyholder",
     "malformatted"
+  ],
+  "cSpell.ignoreWords": [
+    "process"
   ]
 }
