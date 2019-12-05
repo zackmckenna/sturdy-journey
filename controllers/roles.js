@@ -3,21 +3,12 @@ const Role = require('../models/role');
 const ROLES = require('../shared/roles');
 const GAMELOGIC = require('../shared/gameLogic');
 
-let gameLogic = GAMELOGIC;
-let roles = ROLES;
+/*let gameLogic = GAMELOGIC;
+let roles = ROLES; */
 
-rolesRouter.get('/api/roleCount', (request, response) => {
-  response.send(`<h1>There are ${roles.length} roles.</h1>`);
-});
-
-rolesRouter.get('/api/gameLogic', (request, response) => {
-  response.send(`<h3>${gameLogic.map(game => `If there are ${game.players} players, there is ${game.wizards} wizards`)} </h3>`);
-});
-
-rolesRouter.get('/', (request, response) => {
-  Role.find({}).then(roles => {
-    response.json(roles);
-  });
+rolesRouter.get('/', async (request, response) => {
+  const roles = await Role.find({});
+  response.json(roles.map(role => role.toJSON()));
 });
 
 rolesRouter.delete('/:id', (request, response) => {
@@ -28,14 +19,9 @@ rolesRouter.delete('/:id', (request, response) => {
 });
 
 rolesRouter.get('/:id', (request, response) => {
-  const id = +request.params.id;
-  const role = roles.find(role => role.id === id);
-
-  if (role) {
-    response.send(`Role Id: ${role.id} The ${role.name} is a ${role.alignment} character. They can ${role.actions}.`);
-  } else {
-    response.status(404).end();
-  }
+  Role.findById(request.params.id).then(role => {
+    response.json(role.toJSON());
+  });
 });
 
 rolesRouter.post('/', (request, response) => {

@@ -24,10 +24,10 @@ const roleSchema = new mongoose.Schema({
 const Role = mongoose.model('Role', roleSchema);
 
 const role = new Role({
-  name: 'good wizard',
-  alignment: 'neutral',
-  description: 'the good wizard',
-  actions: 'can call out the traitor',
+  name: 'guard',
+  alignment: 'good',
+  description: 'You defend the keyholder',
+  actions: 'identify the traitor',
   booleanAlign: true
 });
 
