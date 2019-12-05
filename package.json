@@ -2,6 +2,9 @@
   "name": "skel",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "author": "Zack McKenna <zackmckenna@gmail.com>",
   "license": "MIT",
   "dependencies": {
