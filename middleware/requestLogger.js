@@ -5,3 +5,5 @@ const requestLogger = (request, response, next) => {
   console.log('---')
   next()
 }
+
+export default requestLogger;

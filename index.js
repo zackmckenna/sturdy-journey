@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+import requestLogger from './middleware/requestLogger'
 
 app.use(bodyParser.json())
+app.use(requestLogger)
 
 let roles = [
   {
