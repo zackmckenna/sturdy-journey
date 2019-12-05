@@ -20,7 +20,8 @@
     "mongoose": "^5.7.13",
     "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.9.1",
-    "nodemon": "^2.0.1"
+    "nodemon": "^2.0.1",
+    "supertest": "^4.0.2"
   },
   "jest": {
     "testEnvironment": "node"
