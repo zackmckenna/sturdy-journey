@@ -1,10 +1,13 @@
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 const bodyParser = require('body-parser')
-import requestLogger from './middleware/requestLogger'
+const cors = require('cors')
+const mongoose = require('mongoose')
 
 app.use(bodyParser.json())
-app.use(requestLogger)
+app.use(morgan('tiny'))
+app.use(cors())
 
 let roles = [
   {
