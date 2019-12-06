@@ -10,7 +10,6 @@ notesRouter.get('/', async (request, response) => {
   response.json(notes.map(note => note.toJSON()));
 });
 
-
 notesRouter.post('/', async (request, response, next) => {
   const body = request.body;
 
@@ -39,5 +38,35 @@ notesRouter.post('/', async (request, response, next) => {
     next(exception);
   }
 });
+
+notesRouter.delete('/:id', async (request, response, next) => {
+  const token = request.token;
+
+  try {
+    const decodedToken = jwt.verify(request.token, process.env.SECRET);
+    if (!token || !decodedToken.id) {
+      return response.status(401).json({ error: 'token missing or invalid' });
+    }
+
+    await Note.findByIdAndRemove(request.params.id);
+    response.status(204).end();
+  } catch (exception) {
+    next(exception);
+  }
+});
+
+notesRouter.get('/:id', async (request, response, next) => {
+  try{
+    const note = await Note.findById(request.params.id);
+    if (note) {
+      response.json(note.toJSON());
+    } else {
+      response.status(404).end();
+    }
+  } catch(exception) {
+    next(exception);
+  }
+});
+
 
 module.exports = notesRouter;
