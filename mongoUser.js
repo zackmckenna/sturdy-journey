@@ -22,9 +22,9 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 const user = new User({
-  name: 'test',
-  username: 'test',
-  password: 'test',
+  name: 'test2',
+  username: 'test2',
+  password: 'test2',
 });
 
 user.save().then(response => {
