@@ -7,6 +7,7 @@ const app = express();
 const cors = require('cors');
 const rolesRouter = require('./controllers/roles');
 const usersRouter = require('./controllers/users');
+const notesRouter = require('./controllers/notes');
 /*const middleware = require('./utils/middleware');*/
 const mongoose = require('mongoose');
 const morgan = require('morgan');
@@ -27,6 +28,7 @@ app.use(cors());
 
 app.use('/api/users', usersRouter);
 app.use('/api/roles', rolesRouter);
+app.use('./api/notes', notesRouter);
 
 module.exports = app;
 

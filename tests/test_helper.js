@@ -1,14 +1,26 @@
-const Note = require('../models/note');
+const User = require('../models/User');
+const Note = require('../models/notes');
 
 const initialUsers = [
   {
-    content: 'HTML is easy',
-    important: false
+    username: 'Zack',
+    name: 'Zack McKenna',
+    password: 'McKenna'
   },
   {
-    content: 'Browser can execute only Javascript',
-    important: true
-  }
+    username: 'Charles',
+    name: 'Charles lenny',
+    password: 'lenny'
+  },
+];
+
+const initialNotes = [
+  {
+    content: 'I am a note.'
+  },
+  {
+    content: 'I am another note.'
+  },
 ];
 
 
@@ -26,6 +38,11 @@ const notesInDb = async () => {
   return notes.map(note => note.toJSON());
 };
 
+const usersInDb = async () => {
+  const users = await User.find({});
+  return users.map(user => user.toJSON());
+};
+
 module.exports = {
-  initialUsers, nonExistingId, notesInDb
+  initialUsers, usersInDb, initialNotes, nonExistingId, notesInDb
 };
