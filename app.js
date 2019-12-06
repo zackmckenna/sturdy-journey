@@ -21,6 +21,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology
   .catch((error) => {
     logger.info(`Error connecting to MongoDB: ${error.message}`);
   });
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan('tiny'));
@@ -28,7 +29,7 @@ app.use(cors());
 
 app.use('/api/users', usersRouter);
 app.use('/api/roles', rolesRouter);
-app.use('./api/notes', notesRouter);
+app.use('/api/notes', notesRouter);
 
 module.exports = app;
 

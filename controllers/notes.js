@@ -1,6 +1,12 @@
-const User = require('../models/user');
-const Note = require('../model/notes');
 const notesRouter = require('express').Router();
+const User = require('../models/user');
+const Note = require('../models/notes');
+
+
+notesRouter.get('/', async (request, response) => {
+  const notes = await Note.find({});
+  response.json(notes.map(note => note.toJSON()));
+});
 
 notesRouter.post('/', async (request, response, next) => {
   const body = request.body;
@@ -22,4 +28,6 @@ notesRouter.post('/', async (request, response, next) => {
   } catch(exception) {
     next(exception);
   }
-})
+});
+
+module.exports = notesRouter;

@@ -1,10 +1,5 @@
 const rolesRouter = require('express').Router();
 const Role = require('../models/role');
-const ROLES = require('../shared/roles');
-const GAMELOGIC = require('../shared/gameLogic');
-
-/*let gameLogic = GAMELOGIC;
-let roles = ROLES; */
 
 rolesRouter.get('/', async (request, response) => {
   const roles = await Role.find({});
