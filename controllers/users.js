@@ -32,6 +32,7 @@ usersRouter.get('/:id', async (request, response, next) => {
 
 usersRouter.post('/', async (request, response, next) => {
   try {
+    console.log(request.body);
     const body = request.body;
 
     const saltRounds = 10;
