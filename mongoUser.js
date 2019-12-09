@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 if ( process.argv.length<3 ) {
   console.log('give password as argument');
@@ -6,6 +6,8 @@ if ( process.argv.length<3 ) {
 }
 
 const password = process.argv[2];
+
+
 
 const url =
   `mongodb+srv://fullstack:${password}@cluster0-lcd1p.mongodb.net/nappzack?retryWrites=true&w=majority
