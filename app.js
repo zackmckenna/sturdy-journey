@@ -15,7 +15,7 @@ const morgan = require('morgan');
 
 logger.info(`Connecting to ${config.MONGODB_URI}`);
 
-mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(config.MONGODB_URI, { useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     logger.info('connected to MongDB.');
   })
