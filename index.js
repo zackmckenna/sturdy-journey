@@ -1,15 +1,23 @@
 const app = require('./app');
 const http = require('http');
-const socketIo = require('socket.io');
 const config = require('./utils/config');
+const socketIo = require('socket.io');
 
 const server = http.createServer(app);
+
 const io = socketIo(server);
 
 io.on('connection', socket => {
-  console.log('Socket.io is connected');
+  console.log(`client connected: ${socket.id}`);
+  socket.on('button', () => {
+    console.log('button clicked');
+  });
+  socket.on('login', (user) => {
+    console.log('logged in');
+    console.log(user);
+  });
   socket.on('disconnect', () => {
-    console.log('client disconnected');
+    console.log('user disconnected');
   });
 });
 
