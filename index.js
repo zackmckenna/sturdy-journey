@@ -7,15 +7,22 @@ const server = http.createServer(app);
 
 const io = socketIo(server, { wxEngine: 'ws ' });
 
-const getVisitors = () => {
+const getUsers = () => {
   let clients = io.sockets.clients().connected;
   let sockets = Object.values(clients);
   let users = sockets.map(socket => socket.user);
   return users;
 };
 
-const emitVisitors = () => {
-  io.emit('visitors', getVisitors());
+const removeUser = (user) => {
+  let clients = io.sockets.clients().connected;
+  let sockets = Object.values(clients);
+  let users = sockets.filter(socket => socket.user.id !== user.id);
+  return users;
+};
+
+const emitUsers = () => {
+  io.emit('visitors', getUsers());
 };
 
 io.on('connection', socket => {
@@ -23,19 +30,28 @@ io.on('connection', socket => {
   socket.on('button', () => {
     console.log('button clicked');
   });
-  socket.on('login', (user) => {
-    console.log(`${user} is logged in.`);
-    socket.emit('add global user', { user: user });
-  });
+
   socket.on('add_user', user => {
-    console.log(`adding ${user}`);
+    console.log(`adding ${user.username}`);
     user !== null ? socket.user = user : null;
-    emitVisitors();
+    emitUsers();
   });
+
+  socket.on('remove_user', user => {
+    socket.user ? console.log(`removing ${user.username}`) : null;
+    socket.user = null;
+    emitUsers();
+  });
+
+  socket.on('message', (message) => {
+    console.log(message);
+  });
+
   socket.on('disconnect', () => {
     console.log('user disconnected');
-    emitVisitors();
+    emitUsers();
   });
+
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
   });
