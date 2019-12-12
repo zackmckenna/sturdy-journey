@@ -7,6 +7,17 @@ const server = http.createServer(app);
 
 const io = socketIo(server, { wxEngine: 'ws ' });
 
+const getVisitors = () => {
+  let clients = io.sockets.clients().connected;
+  let sockets = Object.values(clients);
+  let users = sockets.map(socket => socket.user);
+  return users;
+};
+
+const emitVisitors = () => {
+  io.emit('visitors', getVisitors());
+};
+
 io.on('connection', socket => {
   console.log(`client connected: ${socket.id}`);
   socket.on('button', () => {
@@ -16,12 +27,14 @@ io.on('connection', socket => {
     console.log(`${user} is logged in.`);
     socket.emit('add global user', { user: user });
   });
-  socket.on('add user', user => {
+  socket.on('add_user', user => {
     console.log(`adding ${user}`);
-    io.emit('set new users', user);
+    user !== null ? socket.user = user : null;
+    emitVisitors();
   });
   socket.on('disconnect', () => {
     console.log('user disconnected');
+    emitVisitors();
   });
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
