@@ -14,13 +14,6 @@ const getUsers = () => {
   return users;
 };
 
-const removeUser = (user) => {
-  let clients = io.sockets.clients().connected;
-  let sockets = Object.values(clients);
-  let users = sockets.filter(socket => socket.user.id !== user.id);
-  return users;
-};
-
 const emitUsers = () => {
   io.emit('visitors', getUsers());
 };
