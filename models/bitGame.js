@@ -5,15 +5,13 @@ const bitGameSchema = new mongoose.Schema({
   minPlayers: Number,
   maxPlayers: Number,
   gameType: String,
-  roleDistribution: {
-    numberPlayer: Number,
-    numberCaptian: Number,
-    numberMate: Number,
-    numberMutineer: Number,
-    numberFirstMate: Number,
-    numberGood: Number,
-    numberEvil: Number
-  }
+  numberPlayer: Number,
+  numberCaptian: Number,
+  numberMate: Number,
+  numberMutineer: Number,
+  numberFirstMate: Number,
+  numberGood: Number,
+  numberEvil: Number
 });
 
 bitGameSchema.set('toJSON', {

@@ -3,7 +3,7 @@ const BitGame = require('../models/bitGame');
 
 bitGameRouter.get('/', async (request, response) => {
   const bitGames = await BitGame.find({});
-  response.json(bitGames.map(role => bitGames.toJSON()));
+  response.json(bitGames.map(bitGame => bitGame.toJSON()));
 });
 
 bitGameRouter.delete('/:id', async (request, response, next) => {
@@ -36,15 +36,13 @@ bitGameRouter.post('/', async (request, response, next) => {
     minPlayers: body.minPlay,
     maxPlayers: body.maxPlayers,
     gameType: body.gameType,
-    roleDistribution: {
-      numberPlayer: body.roleDistribution.numberPlayer,
-      numberCaptian: body.roleDistribution.numberCaptian,
-      numberMate: body.roleDistribution.numberMate,
-      numberMutineer: body.roleDistribution.numberMutineer,
-      numberFirstmate: body.roleDistribution.numberFirstmate,
-      numberGood: body.roleDistribution.numberGood,
-      numberEvil: body.roleDistribution.numberEvil
-    }
+    numberPlayer: body.numberPlayer,
+    numberCaptian: body.numberCaptian,
+    numberMate: body.numberMate,
+    numberMutineer: body.numberMutineer,
+    numberFirstmate: body.numberFirstmate,
+    numberGood: body.numberGood,
+    numberEvil: body.numberEvil
   });
 
   try {
