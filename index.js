@@ -18,6 +18,11 @@ const emitUsers = () => {
   io.emit('visitors', getUsers());
 };
 
+const emitRoles = (roles) => {
+  console.log('distributing roles')
+  io.emit('distribute roles', roles);
+};
+
 io.on('connection', socket => {
   console.log(`client connected: ${socket.id}`);
   socket.on('button', () => {
@@ -26,6 +31,7 @@ io.on('connection', socket => {
 
   socket.on('add_user', user => {
     console.log(`adding ${user.username}`);
+    console.log(`user id: ${user.userId}`);
     user !== null ? socket.user = user : null;
     emitUsers();
   });
@@ -38,6 +44,11 @@ io.on('connection', socket => {
 
   socket.on('message', (message) => {
     console.log(message);
+  });
+
+  socket.on('start game', (distributedRoles) => {
+    console.log(distributedRoles);
+    emitRoles(distributedRoles);
   });
 
   socket.on('disconnect', () => {
