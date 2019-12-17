@@ -60,7 +60,7 @@ io.on('connection', socket => {
     io.emit('chat message', msg);
   });
 });
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 30725;
 
 server.listen(PORT, () => {
   console.log(`Server running on port ${config.PORT}`);
