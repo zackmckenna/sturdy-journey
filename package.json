@@ -6,7 +6,11 @@
     "start": "NODE_ENV=production node index.js",
     "watch": "NODE_ENV=production nodemon index.js",
     "lint": "eslint .",
-    "test": "NODE_ENV=test jest --verbose"
+    "test": "NODE_ENV=test jest --verbose",
+    "build:ui": "rm -rf build && cd ../skelfront && yarn run build && cp -r build ../skel/",
+    "deploy": "git push heroku master",
+    "deploy:full": "yarn run build:ui && git add . && git commit -m uibuild && yarn run deploy",
+    "logs:prod": "heroku logs --tail"
   },
   "author": "Zack McKenna <zackmckenna@gmail.com>",
   "license": "MIT",
