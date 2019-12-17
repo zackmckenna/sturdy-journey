@@ -29,6 +29,7 @@ app.use(morgan('tiny'));
 app.use(cors());
 app.use(middleware.errorHandler);
 app.use(middleware.tokenExtractor);
+app.use(express.static('build'));
 
 app.use('/api/users', usersRouter);
 app.use('/api/roles', rolesRouter);

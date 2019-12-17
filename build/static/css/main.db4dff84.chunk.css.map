@@ -1,0 +1,1 @@
+{"version":3,"sources":["app.css"],"names":[],"mappings":"AAAA,QACE,iBAAkB,CAClB,QAAS,CACT,UAEF","file":"main.db4dff84.chunk.css","sourcesContent":[".footer {\n  position: absolute;\n  bottom: 0;\n  width: 100%;\n  \n}\n"]}
