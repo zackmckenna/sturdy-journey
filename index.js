@@ -5,7 +5,10 @@ const socketIo = require('socket.io');
 
 const server = http.createServer(app);
 
-const io = socketIo(server, { wxEngine: 'ws ' });
+const io = socketIo(server, {
+  wxEngine: 'ws ',
+  pingTimeout: 120000
+});
 
 const getUsers = () => {
   let clients = io.sockets.clients().connected;
