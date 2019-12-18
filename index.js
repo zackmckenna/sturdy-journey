@@ -22,7 +22,7 @@ const emitUsers = () => {
 };
 
 const emitRoles = (roles) => {
-  console.log('distributing roles')
+  console.log('distributing roles');
   io.emit('distribute roles', roles);
 };
 
