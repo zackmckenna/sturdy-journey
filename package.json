@@ -11,7 +11,7 @@
   "author": "Zack McKenna <zackmckenna@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^3.0.7",
+    "bcrypt": "^5.0.0",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.19.0",
     "brcypt": "^1.0.1",
